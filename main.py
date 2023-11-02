@@ -1,3 +1,12 @@
+# Python grub2-mkpasswd-pbkdf2 tool
+# Written for Check Point CloudGuard images which require a grub2 format password hash
+# for securing maintenance mode.
+# This tool is for users who may not have access to a Linux machine with the necessary grub tools.
+#
+# Usage: python3 main.py
+# (then enter your password, and copy the hash output)
+
+
 import os # Needed for accessing pseudo random number generator
 import sys # needed to exit with error code
 from  hashlib import pbkdf2_hmac # Provides PBKDF2 hash functions
@@ -7,7 +16,10 @@ from getpass import getpass # get the password and do not echo to screen
 logging.basicConfig(format='%(levelname)s:%(message)s')
 
 # Default values
-salt = os.urandom(64) # Use the system default pseudo random number generator which is suitable for crypto
+
+# Use the system default pseudo random number generator which is suitable for crypto. Creating a 512b salt
+salt = os.urandom(64) 
+
 pbkdf2_iterations = 10000 # Default iterations used by grub2-mkpasswd-pbkdf2
 sha_type = 'sha512' # sha256 is also a valid option
 
